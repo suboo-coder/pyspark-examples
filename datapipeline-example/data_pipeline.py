@@ -1,29 +1,38 @@
+# import os
+# import logging
+# import logging.config
+
 import pyspark
 from pyspark.sql import SparkSession
-from pyspark.sql.types import IntegerType
 
 import ingest
 import transform
 import persist
+from log_provider import LoggerProvider
 
 
-class Pipeline:
+# DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+# logging.config.fileConfig("{DIR_PATH}/resources/config/logging.conf".format(DIR_PATH=DIR_PATH))
+# logger = logging.getLogger(__name__)
+
+
+class Pipeline():
+    def __init__(self) -> None:
+        self.spark_session = SparkSession.builder.appName("Data Pipeline")\
+            .enableHiveSupport().getOrCreate()
+        self.logger = LoggerProvider().get_logger(spark=self.spark_session, custom_prefix=self.__class__.__name__)
+
     def run(self):
-        print("Running pipeline")
+        self.logger.info("Running pipeline")
         df = ingest.Ingestion(spark_session=self.spark_session).ingest()
         df.show()
         # df = transform.Transform(spark_session=self.spark_session).transform(df=df)
-        df = transform.Transform().transform(df=df)
+        df = transform.Transform(spark_session=self.spark_session).transform(df=df)
         df.show()
-        persist.Persist(spark_session=SparkSession).persist(df=df)
+        persist.Persist(spark_session=self.spark_session).persist(df=df)
         return
-
-    def create_spark_session(self):
-        self.spark_session = SparkSession.builder.appName("Data Pipeline")\
-            .enableHiveSupport().getOrCreate()
 
 
 if __name__ == "__main__":
     pipeline = Pipeline()
-    pipeline.create_spark_session()
     pipeline.run()
