@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres
+    shm_size: 256mb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: coursedb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+  
+  # Add our custome image from dockerfile. No need of port. Just should be able to connect db.
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://admin:admin@db:5432/coursedb
+    command: ["/bin/bash"]
+    networks:
+      - backend
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+
+networks:
+  backend:
+    driver: bridge
