@@ -2,7 +2,7 @@
 - Python Version 3.11
 - Spark 3.5
 
-# Run Pipelines
+# Run Pipeline
 ## Build image
 docker build -t app8 .
 ## Interact
@@ -28,6 +28,14 @@ docker compose build --no-cache
 
 ## Run Docker in interactive mode once
 docker compose run --rm app /bin/bash
+
+## Create schema, table and records
+- Run all the queries.
+- Course data is only used for reading.
+- The job pyspark-examples/hive-to-postgres-example is used to write in people table.
+
+## Run the job
+[Follow here](#run-the-job)
 
 # Postgres
 ## Connect with DB client
