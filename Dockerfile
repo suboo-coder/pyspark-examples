@@ -23,4 +23,7 @@ RUN pip install psycopg2
 # Move the helloworld-example directory to the container
 COPY . /pyspark-examples
 
+# COPY postgresql-42.7.4.jar driver under /opt/spark/jars
+COPY postgresql-42.7.4.jar /opt/spark/jars
+
 CMD ["/bin/bash"]

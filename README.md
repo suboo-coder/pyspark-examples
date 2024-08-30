@@ -25,6 +25,7 @@ docker compose up -d
 # Approach 2 to run all container once (Recomended!)
 ## Build Docker image
 docker compose build --no-cache
+
 ## Run Docker in interactive mode once
 docker compose run --rm app /bin/bash
 
@@ -44,6 +45,14 @@ create table courseschema.course
     course_section json NOT NULL,
     creation_date date NOT NULL,
     CONSTRAINT course_pkey PRIMARY KEY (course_id)
+);
+
+create table courseschema.people
+(
+    name character varying collate "default" NOT NULL,
+    gender character varying collate "default" NOT NULL,
+    birth date NOT NULL,
+    rank INT NOT NULL
 );
 ```
 

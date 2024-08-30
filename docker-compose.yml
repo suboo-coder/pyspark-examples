@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    shm_size: 256mb
+    shm_size: 512mb
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
@@ -19,7 +19,13 @@ services:
     depends_on:
       - db
     environment:
+      DATABASE_TYPE: postgresql
       DATABASE_URL: postgres://admin:admin@db:5432/coursedb
+      DATABASE_NAME: coursedb
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: admin
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
     command: ["/bin/bash"]
     networks:
       - backend

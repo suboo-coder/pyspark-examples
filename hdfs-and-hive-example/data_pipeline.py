@@ -57,16 +57,15 @@ class Pipeline():
     def run(self):
         self.logger.info("Running pipeline")
         ingest_d = ingest.Ingestion(spark_session=self.spark_session)
-        ingest_d.read_from_pg()
-        # df = ingest_d.ingest()
-        # df.show()
-        # df = transform.Transform(spark_session=self.spark_session).transform(df=df)
-        # df.show()
-        # persist.Persist(spark_session=self.spark_session).persist(df=df)
+        df = ingest_d.ingest()
+        df.show()
+        df = transform.Transform(spark_session=self.spark_session).transform(df=df)
+        df.show()
+        persist.Persist(spark_session=self.spark_session).persist(df=df)
         return
 
 
 if __name__ == "__main__":
     pipeline = Pipeline()
-    # pipeline.create_hive_table()
+    pipeline.create_hive_table()
     pipeline.run()
