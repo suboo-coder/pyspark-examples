@@ -11,6 +11,6 @@ class Transform:
 
     def transform(self, df):
         self.logger.info("Transforming data")
-        df1 = df.na.fill("Unmknown", subset=["gender", "birth"])
-        df2 = df1.na.fill(0, subset=["rank"])
+        df1 = df.na.fill("Unknown", subset=["gender", "birth"])
+        df2 = df1.na.fill('0', subset=["rank"])
         return df2

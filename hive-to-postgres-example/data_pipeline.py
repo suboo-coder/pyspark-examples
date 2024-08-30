@@ -17,12 +17,12 @@ class Pipeline():
         self.spark_session.sql("CREATE DATABASE IF NOT EXISTS courses_db")
         self.spark_session.sql(
             "CREATE TABLE IF NOT EXISTS courses_db.people " \
-            "(name STRING, gender STRING, birth STRING, rank INT)"
+            "(name STRING, gender STRING, birth STRING, rank STRING)"
         )
         # Add 10 rows to the table
         self.spark_session.sql(
             "INSERT INTO courses_db.people VALUES " \
-            "('Monkey D Luffy', 'Male', ''2024-09-09, 1)"
+            "('Monkey D Luffy', 'Male', '2024-09-09', 1)"
         )
         self.spark_session.sql(
             "INSERT INTO courses_db.people VALUES " \
